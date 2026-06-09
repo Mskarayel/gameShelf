@@ -10,16 +10,56 @@ interface GameListProps {
 export function GameList({ games, onEdit, onDelete }: GameListProps) {
   if (games.length === 0) {
     return (
-      <div className="text-center py-20 text-gray-400 dark:text-gray-600">
-        <p className="text-5xl mb-4">🎮</p>
-        <p className="text-lg font-medium">Henüz oyun eklenmedi.</p>
-        <p className="text-sm mt-1">Yukarıdaki formu kullanarak ilk oyununu ekle!</p>
+      <div
+        style={{
+          textAlign: "center",
+          padding: "5rem 1rem",
+          border: "1px dashed #3a3528",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "3rem",
+            color: "#3a3528",
+            marginBottom: "1rem",
+            letterSpacing: "0.1em",
+          }}
+        >
+          INSERT COIN
+        </p>
+        <p
+          style={{
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "1rem",
+            color: "#8a8070",
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+          }}
+        >
+          Rafın boş duruyor. Koleksiyonuna ilk oyunu ekle.
+        </p>
+        <p
+          style={{
+            fontSize: "0.8rem",
+            color: "#3a3528",
+            marginTop: "0.5rem",
+          }}
+        >
+          Yukarıdaki "+ Oyun Ekle" butonuna bas, başlayalım.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+        gap: "1rem",
+      }}
+    >
       {games.map((game) => (
         <GameCard key={game.id} game={game} onEdit={onEdit} onDelete={onDelete} />
       ))}

@@ -17,6 +17,27 @@ const defaultForm = {
   coverUrl: "",
 };
 
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  backgroundColor: "#1c1a17",
+  border: "1px solid #3a3528",
+  color: "#e8e0d0",
+  padding: "0.5rem 0.75rem",
+  fontSize: "0.875rem",
+  outline: "none",
+};
+
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  fontFamily: "'Oswald', sans-serif",
+  fontSize: "0.75rem",
+  fontWeight: 600,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase" as const,
+  color: "#c9a84c",
+  marginBottom: "0.35rem",
+};
+
 export function GameForm({ onSubmit, editingGame, onCancel }: GameFormProps) {
   const [form, setForm] = useState(defaultForm);
 
@@ -54,9 +75,7 @@ export function GameForm({ onSubmit, editingGame, onCancel }: GameFormProps) {
   }
 
   function handleChange(
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
@@ -64,63 +83,70 @@ export function GameForm({ onSubmit, editingGame, onCancel }: GameFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 space-y-4"
+      style={{
+        backgroundColor: "#242018",
+        border: "1px solid #3a3528",
+        borderLeft: "3px solid #c9a84c",
+        padding: "1.5rem",
+      }}
     >
-      <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-        {editingGame ? "Oyunu Düzenle" : "Yeni Oyun Ekle"}
+      <h2
+        style={{
+          fontFamily: "'Oswald', sans-serif",
+          fontSize: "1.25rem",
+          fontWeight: 700,
+          color: "#c9a84c",
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          marginBottom: "1.25rem",
+        }}
+      >
+        {editingGame ? "// Kaydı Güncelle" : "// Yeni Oyun Ekle"}
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Oyun Adı *
-          </label>
+          <label style={labelStyle}>Oyun Adı *</label>
           <input
             name="title"
             value={form.title}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Örn: The Witcher 3"
+            style={inputStyle}
+            placeholder="örn: Red Dead Redemption 2"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Platform *
-          </label>
+          <label style={labelStyle}>Platform *</label>
           <input
             name="platform"
             value={form.platform}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Örn: PC, PS5, Xbox"
+            style={inputStyle}
+            placeholder="PC, PS5, Xbox, Switch..."
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Tür
-          </label>
+          <label style={labelStyle}>Tür</label>
           <input
             name="genre"
             value={form.genre}
             onChange={handleChange}
-            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Örn: RPG, FPS, Strateji"
+            style={inputStyle}
+            placeholder="RPG, FPS, Strateji..."
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Durum
-          </label>
+          <label style={labelStyle}>Durum</label>
           <select
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style={{ ...inputStyle, cursor: "pointer" }}
           >
             <option value="wishlist">İstek Listesi</option>
             <option value="playing">Oynuyor</option>
@@ -130,9 +156,7 @@ export function GameForm({ onSubmit, editingGame, onCancel }: GameFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Puan (1-10)
-          </label>
+          <label style={labelStyle}>Puan (1-10)</label>
           <input
             name="rating"
             type="number"
@@ -140,51 +164,71 @@ export function GameForm({ onSubmit, editingGame, onCancel }: GameFormProps) {
             max="10"
             value={form.rating}
             onChange={handleChange}
-            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style={inputStyle}
             placeholder="Opsiyonel"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Kapak Resmi URL
-          </label>
+          <label style={labelStyle}>Kapak Resmi URL</label>
           <input
             name="coverUrl"
             value={form.coverUrl}
             onChange={handleChange}
-            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style={inputStyle}
             placeholder="https://..."
           />
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Notlar
-        </label>
+      <div className="mt-4">
+        <label style={labelStyle}>Notlar</label>
         <textarea
           name="notes"
           value={form.notes}
           onChange={handleChange}
           rows={2}
-          className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-          placeholder="Kısa not..."
+          style={{ ...inputStyle, resize: "none" }}
+          placeholder="Kısa not ekleyebilirsin..."
         />
       </div>
 
-      <div className="flex gap-3 pt-2">
+      <div className="flex gap-3 mt-5">
         <button
           type="submit"
-          className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition"
+          style={{
+            flex: 1,
+            backgroundColor: "#c9a84c",
+            color: "#1a3a2a",
+            border: "none",
+            fontFamily: "'Oswald', sans-serif",
+            fontWeight: 700,
+            fontSize: "0.875rem",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            padding: "0.6rem 0",
+            cursor: "pointer",
+          }}
         >
-          {editingGame ? "Güncelle" : "Ekle"}
+          {editingGame ? "Güncelle" : "Koleksiyona Ekle"}
         </button>
         {editingGame && (
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-semibold py-2 rounded-lg transition"
+            style={{
+              flex: 1,
+              backgroundColor: "transparent",
+              color: "#8a8070",
+              border: "1px solid #3a3528",
+              fontFamily: "'Oswald', sans-serif",
+              fontWeight: 600,
+              fontSize: "0.875rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              padding: "0.6rem 0",
+              cursor: "pointer",
+            }}
           >
             İptal
           </button>

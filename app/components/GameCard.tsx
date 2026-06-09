@@ -6,69 +6,155 @@ interface GameCardProps {
   onDelete: (id: string) => void;
 }
 
-const statusLabels: Record<GameStatus, { label: string; color: string }> = {
-  playing: { label: "Oynuyor", color: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300" },
-  completed: { label: "Tamamlandı", color: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" },
-  dropped: { label: "Bırakıldı", color: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300" },
-  wishlist: { label: "İstek Listesi", color: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" },
+const statusConfig: Record<GameStatus, { label: string; color: string; bg: string }> = {
+  playing:   { label: "Oynuyor",       color: "#4ade80", bg: "#14532d" },
+  completed: { label: "Tamamlandı",    color: "#c9a84c", bg: "#1a3a2a" },
+  dropped:   { label: "Bırakıldı",     color: "#f87171", bg: "#3b1010" },
+  wishlist:  { label: "İstek Listesi", color: "#94a3b8", bg: "#1e293b" },
 };
 
 export function GameCard({ game, onEdit, onDelete }: GameCardProps) {
-  const status = statusLabels[game.status];
+  const s = statusConfig[game.status];
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
-      <div className="relative h-40 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+    <div
+      style={{
+        backgroundColor: "#242018",
+        border: "1px solid #3a3528",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Cover */}
+      <div
+        style={{
+          position: "relative",
+          height: "10rem",
+          backgroundColor: "#1a3a2a",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+      >
         {game.coverUrl ? (
           <img
             src={game.coverUrl}
             alt={game.title}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
           />
         ) : (
-          <span className="text-4xl select-none">🎮</span>
+          <span style={{ fontSize: "2.5rem", opacity: 0.4 }}>▣</span>
         )}
         <span
-          className={`absolute top-2 right-2 text-xs font-semibold px-2 py-1 rounded-full ${status.color}`}
+          style={{
+            position: "absolute",
+            top: "0.5rem",
+            right: "0.5rem",
+            backgroundColor: s.bg,
+            color: s.color,
+            border: `1px solid ${s.color}`,
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "0.65rem",
+            fontWeight: 600,
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            padding: "0.15rem 0.5rem",
+          }}
         >
-          {status.label}
+          {s.label}
         </span>
       </div>
 
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-bold text-gray-800 dark:text-gray-100 text-base truncate">
+      {/* Body */}
+      <div style={{ padding: "0.85rem", display: "flex", flexDirection: "column", flex: 1 }}>
+        <h3
+          style={{
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "1rem",
+            fontWeight: 600,
+            color: "#e8e0d0",
+            letterSpacing: "0.03em",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            marginBottom: "0.2rem",
+          }}
+        >
           {game.title}
         </h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+
+        <p style={{ fontSize: "0.75rem", color: "#8a8070", marginBottom: "0.4rem" }}>
           {game.platform}
           {game.genre ? ` · ${game.genre}` : ""}
         </p>
 
         {game.rating !== null && (
-          <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium mt-1">
-            ★ {game.rating}/10
+          <p
+            style={{
+              fontFamily: "'Oswald', sans-serif",
+              fontSize: "0.85rem",
+              color: "#c9a84c",
+              fontWeight: 600,
+              marginBottom: "0.3rem",
+            }}
+          >
+            ★ {game.rating} / 10
           </p>
         )}
 
         {game.notes && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
+          <p
+            style={{
+              fontSize: "0.72rem",
+              color: "#8a8070",
+              marginBottom: "0.5rem",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical" as const,
+              overflow: "hidden",
+            }}
+          >
             {game.notes}
           </p>
         )}
 
-        <div className="mt-auto pt-3 flex gap-2">
+        {/* Buttons */}
+        <div style={{ marginTop: "auto", paddingTop: "0.75rem", display: "flex", gap: "0.5rem" }}>
           <button
             onClick={() => onEdit(game)}
-            className="flex-1 text-xs bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950 dark:hover:bg-indigo-900 text-indigo-700 dark:text-indigo-300 font-medium py-1.5 rounded-lg transition"
+            style={{
+              flex: 1,
+              backgroundColor: "transparent",
+              color: "#c9a84c",
+              border: "1px solid #c9a84c",
+              fontFamily: "'Oswald', sans-serif",
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              padding: "0.35rem 0",
+              cursor: "pointer",
+            }}
           >
             Düzenle
           </button>
           <button
             onClick={() => onDelete(game.id)}
-            className="flex-1 text-xs bg-red-50 hover:bg-red-100 dark:bg-red-950 dark:hover:bg-red-900 text-red-600 dark:text-red-400 font-medium py-1.5 rounded-lg transition"
+            style={{
+              flex: 1,
+              backgroundColor: "transparent",
+              color: "#f87171",
+              border: "1px solid #3a3528",
+              fontFamily: "'Oswald', sans-serif",
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              padding: "0.35rem 0",
+              cursor: "pointer",
+            }}
           >
             Sil
           </button>

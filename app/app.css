@@ -1,20 +1,57 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
 }
 
-html,
-body {
-  @apply bg-gray-50 dark:bg-gray-950;
+html, body {
+  background-color: #1c1a17;
+  color: #e8e0d0;
   font-family: var(--font-sans);
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
 }
 
 * {
   box-sizing: border-box;
 }
+
+@keyframes thumbnailZoom {
+  0%   { transform: scale(1);    filter: brightness(1); }
+  45%  { transform: scale(1.38); filter: brightness(1.7); z-index: 10; }
+  100% { transform: scale(1);    filter: brightness(1); }
+}
+
+@keyframes fadeInDetail {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+/* ── Neon sign animations ── */
+@keyframes neonFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+  19%, 23%, 55%                      { opacity: 0.15; }
+  20%, 24%, 56%                      { opacity: 0.9; }
+  21%                                { opacity: 0.08; }
+}
+
+@keyframes neonBreath {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+@keyframes neonBreath2 {
+  0%, 100% { opacity: 0.85; }
+  40%      { opacity: 0.4; }
+  70%      { opacity: 1; }
+}
+
+@keyframes ledPulse {
+  0%, 100% { opacity: 1;    box-shadow: 0 0 8px #4ade80, 0 0 3px #4ade80; }
+  50%       { opacity: 0.3; box-shadow: 0 0 2px #4ade80; }
+}
+
+/* Scrollbar inside screen area */
+.shelf-screen::-webkit-scrollbar        { width: 5px; }
+.shelf-screen::-webkit-scrollbar-track  { background: #050503; }
+.shelf-screen::-webkit-scrollbar-thumb  { background: #c9a84c55; }
+.shelf-screen::-webkit-scrollbar-thumb:hover { background: #c9a84c99; }
